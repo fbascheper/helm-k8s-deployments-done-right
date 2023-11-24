@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "demo-02-spring-boot-microservice.fullname" . }}
+  labels:
+    {{- include "demo-02-spring-boot-microservice.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "demo-02-spring-boot-microservice.selectorLabels" . | nindent 4 }}
